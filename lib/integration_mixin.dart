@@ -1,15 +1,15 @@
 import 'package:colonel/command_base.dart';
 import 'package:rxdart/rxdart.dart';
 
-mixin RedoableMixin<T extends CommandBase> {
+mixin RedoableMixin<I> {
 
-  List<T> redoStack = [];
-  List<T> undoStack = [];
+  List<CommandBase<I>> redoStack = [];
+  List<CommandBase<I>> undoStack = [];
 
   BehaviorSubject commandRx = BehaviorSubject();
 
-  Future<bool> execute(T command) {
-    return command.execute(this)
+  Future<bool> execute(CommandBase<I> command, I input) {
+    return command.execute(input)
         .then((success) {
       if (success) {
         commandRx.add(command);
@@ -23,7 +23,7 @@ mixin RedoableMixin<T extends CommandBase> {
   }
 
   Future<bool> undo() {
-    T command = undoStack.removeLast();
+    CommandBase<I> command = undoStack.removeLast();
     return command.undo().then((success) {
       if (success) {
         redoStack.add(command);
@@ -34,7 +34,7 @@ mixin RedoableMixin<T extends CommandBase> {
   }
 
   Future<bool> redo() {
-    T command = redoStack.removeLast();
+    CommandBase<I> command = redoStack.removeLast();
     return command.redo().then((success) {
       if (success) {
         undoStack.add(command);
