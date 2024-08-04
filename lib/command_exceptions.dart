@@ -9,3 +9,9 @@ class CommandRedoException implements Exception {
 
   final dynamic message = 'Cannot redo a command that hasn\'t been executed';
 }
+
+class CommandExecutionException implements Exception {
+  CommandExecutionException(): super();
+
+  final dynamic message = 'Cannot redo a execute command';
+}
