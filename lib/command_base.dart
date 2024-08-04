@@ -5,10 +5,10 @@ typedef CommandCallback = Function(CommandBase);
 
 abstract class CommandBase<T> {
   CommandBase({ timestamp });
-  static BehaviorSubject listener = BehaviorSubject();
   bool notifyListenersOnExecution = true;
+  static BehaviorSubject listener = BehaviorSubject();
 
-  Future<bool> execute(T element);
+  Future<bool> execute();
   Future<bool> undo();
   Future<bool> redo();
   bool get isUndoable;

@@ -7,8 +7,8 @@ class CommandWrapper<OuterInput, InnerInput> extends CommandBase<OuterInput> {
   final InnerInput input;
 
   @override
-  Future<bool> execute(OuterInput element) {
-    return command.execute(input);
+  Future<bool> execute() {
+    return command.execute();
   }
 
   @override

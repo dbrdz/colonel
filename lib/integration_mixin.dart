@@ -1,15 +1,15 @@
 import 'package:colonel/command_base.dart';
 import 'package:rxdart/rxdart.dart';
 
-mixin RedoableMixin<I> {
+mixin CommandMixin<I> {
 
   List<CommandBase<I>> redoStack = [];
   List<CommandBase<I>> undoStack = [];
 
   BehaviorSubject commandRx = BehaviorSubject();
 
-  Future<bool> execute(CommandBase<I> command, I input) {
-    return command.execute(input)
+  Future<bool> execute(CommandBase<I> command) {
+    return command.execute()
         .then((success) {
       if (success) {
         commandRx.add(command);
